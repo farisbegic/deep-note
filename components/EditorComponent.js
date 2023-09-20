@@ -28,7 +28,7 @@ const EditorComponent = ({ note }) => {
     await add(constants.collection, { data }, note.id);
   };
 
-  const debouncedSaveData = debounce(saveData, 10000);
+  const debouncedSaveData = debounce(saveData, 5000);
 
   const initializeEditor = () => {
     const editor = new EditorJS({
