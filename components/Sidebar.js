@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import add from "@/firebase/firestore/add";
 import deleteDocument from "@/firebase/firestore/delete";
 import constants from "@/config/constants";
 import useDebounce from "@/hooks/useDebounce";
 import SidebarItem from "./SidebarItem";
+import { signOut } from "next-auth/react";
 
 function Sidebar({ notes, selected, setNote, children }) {
   const addItem = async () => {
-    await add(constants.collection, {
+    await add(constants.collections.notes, {
       blocks: [
         {
           type: "paragraph",
@@ -27,7 +28,7 @@ function Sidebar({ notes, selected, setNote, children }) {
   const editItem = async (name, data) => {
     const { id, ...rest } = data;
     await add(
-      constants.collection,
+      constants.collections.notes,
       {
         ...rest,
         name: name,
@@ -37,7 +38,7 @@ function Sidebar({ notes, selected, setNote, children }) {
   };
 
   const deleteItem = async (id) => {
-    await deleteDocument(constants.collection, id);
+    await deleteDocument(constants.collections.notes, id);
   };
 
   const handleEdit = (e) => {
@@ -117,7 +118,7 @@ function Sidebar({ notes, selected, setNote, children }) {
         </div>
 
         <nav
-          className="hs-accordion-group p-6 w-full flex flex-col flex-wrap"
+          className="h-full flex flex-col justify-between hs-accordion-group p-6 w-full flex-wrap"
           data-hs-accordion-always-open
         >
           <ul className="w-full space-y-1.5">
@@ -142,7 +143,7 @@ function Sidebar({ notes, selected, setNote, children }) {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-4 h-4"
                 >
                   <path
                     strokeLinecap="round"
@@ -154,6 +155,26 @@ function Sidebar({ notes, selected, setNote, children }) {
               </button>
             </li>
           </ul>
+          <button
+            className="flex items-center w-full gap-x-3.5 py-2 px-2.5 bg-red-300 text-sm text-slate-700 rounded-md"
+            onClick={() => signOut()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+            Sign Out
+          </button>
         </nav>
       </div>
       {children}

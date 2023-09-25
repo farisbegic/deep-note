@@ -11,10 +11,9 @@ const add = async (name, data, id = null) => {
   let error = null;
 
   try {
-    id
+    result = id
       ? await setDoc(docRef, data, { merge: true })
       : await addDoc(docRef, data);
-    result = docRef.id;
     revalidatePath("/");
   } catch (e) {
     error = e.message;

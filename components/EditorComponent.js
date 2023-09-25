@@ -13,7 +13,7 @@ const EditorComponent = ({ note }) => {
   const latestNoteId = useRef(note.id);
 
   const saveData = async (data) => {
-    await add(constants.collection, data, latestNoteId.current);
+    await add(constants.collections.notes, data, latestNoteId.current);
   };
 
   const handleEditorChange = async () => {

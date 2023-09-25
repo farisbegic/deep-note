@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import dynamic from "next/dynamic";
+import Authentication from "./Authentication";
 
 const CustomEditor = dynamic(() => import("@/components/EditorComponent"), {
   ssr: false,

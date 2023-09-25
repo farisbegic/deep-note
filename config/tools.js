@@ -1,10 +1,8 @@
 import CodeTool from "@editorjs/code";
 import InlineCode from "@editorjs/inline-code";
 import List from "@editorjs/list";
-import Quote from "@editorjs/quote";
 import Header from "@editorjs/header";
 import Checklist from "@editorjs/checklist";
-import Warning from "@editorjs/warning";
 import Marker from "@editorjs/marker";
 import Table from "@editorjs/table";
 import AskAITool from "@/tools/AskAITool";
@@ -27,16 +25,6 @@ const tools = {
     class: Checklist,
     inlineToolbar: true,
   },
-  quote: {
-    class: Quote,
-    inlineToolbar: true,
-    config: {
-      quotePlaceholder: "Enter a quote",
-      captionPlaceholder: "Quote's author",
-    },
-    shortcut: "CMD+SHIFT+O",
-  },
-  warning: Warning,
   marker: {
     class: Marker,
     shortcut: "CMD+SHIFT+M",
