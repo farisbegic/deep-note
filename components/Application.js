@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import EditorComponent from "@/components/EditorComponent";
 import Sidebar from "@/components/Sidebar";
 import dynamic from "next/dynamic";
 

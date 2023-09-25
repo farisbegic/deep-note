@@ -12,7 +12,7 @@ const EditorComponent = ({ note }) => {
   const editorInstance = useRef(null);
 
   const saveData = async (data) => {
-    await add(constants.collection, { data }, note.id);
+    await add(constants.collection, data, note.id);
   };
 
   const handleEditorChange = async () => {
@@ -30,7 +30,7 @@ const EditorComponent = ({ note }) => {
       onReady: () => {
         editorInstance.current = editor;
       },
-      data: note?.data,
+      data: note,
       tools: tools,
     });
   };
@@ -52,7 +52,7 @@ const EditorComponent = ({ note }) => {
     }
 
     if (editorInstance.current.isReady) {
-      editorInstance.current.render(note.data);
+      editorInstance.current.render(note);
     }
   }, [note]);
 

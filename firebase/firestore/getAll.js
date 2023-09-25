@@ -16,7 +16,7 @@ const getAll = async (name) => {
   });
 
   result.sort((a, b) => {
-    return a.data.time > b.data.time ? 1 : -1;
+    return a.time > b.time ? 1 : -1;
   });
 
   return result;
