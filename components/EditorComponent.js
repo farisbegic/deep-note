@@ -20,7 +20,7 @@ const EditorComponent = ({ note }) => {
     debouncedSaveData(data);
   };
 
-  const debouncedSaveData = useDebounce(saveData, 4000);
+  const debouncedSaveData = useDebounce(saveData, 2000);
 
   const initializeEditor = () => {
     const editor = new EditorJS({
