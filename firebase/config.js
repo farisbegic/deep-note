@@ -11,7 +11,6 @@ const firebaseConfig = {
   appId: constants.firebase.firebaseAppId,
 };
 
-// Initialize Firebase
 let firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 

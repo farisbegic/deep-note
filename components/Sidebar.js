@@ -13,7 +13,7 @@ function Sidebar({ notes, selected, setNote, children }) {
           {
             type: "paragraph",
             data: {
-              text: "Hello!",
+              text: "Write your content here!",
             },
           },
         ],

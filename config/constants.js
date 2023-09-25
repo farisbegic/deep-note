@@ -12,6 +12,9 @@ const constants = {
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     firebaseAppId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   },
+  openai: {
+    key: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  },
 };
 
 export default constants;
