@@ -10,9 +10,10 @@ import useDebounce from "@/hooks/useDebounce";
 
 const EditorComponent = ({ note }) => {
   const editorInstance = useRef(null);
+  const latestNoteId = useRef(note.id);
 
   const saveData = async (data) => {
-    await add(constants.collection, data, note.id);
+    await add(constants.collection, data, latestNoteId.current);
   };
 
   const handleEditorChange = async () => {
@@ -55,6 +56,10 @@ const EditorComponent = ({ note }) => {
       editorInstance.current.render(note);
     }
   }, [note]);
+
+  useEffect(() => {
+    latestNoteId.current = note.id;
+  }, [note.id]);
 
   return <div className="lg:px-10 p-5 h-full" id="editorjs" />;
 };

@@ -79,7 +79,6 @@ class AskAITool {
       item.addEventListener("click", async (e) => {
         const listItem = e.target.closest("li");
         const action = listItem ? listItem.getAttribute("data-action") : null;
-        console.log("Selected action:", action);
         if (this.range) {
           try {
             const response = await getGPTResponse(
