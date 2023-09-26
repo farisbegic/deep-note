@@ -13,6 +13,9 @@ const EditorComponent = ({ note }) => {
   const latestNoteId = useRef(note.id);
 
   const saveData = async (data) => {
+    if (data.blocks.length === 0) {
+      return;
+    }
     await addDocument(constants.collections.notes, data, latestNoteId.current);
   };
 
