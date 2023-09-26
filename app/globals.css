@@ -2,16 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.ce-inline-tool svg {
-    width: auto;
-    height: auto;
-}
-
 .ce-block__content {
     max-width: 100%;
 }
 
-.ce-toolbar__actions {
-    right: 0;
-}
 

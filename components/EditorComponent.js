@@ -4,16 +4,16 @@ import React, { useEffect, useRef } from "react";
 import EditorJS from "@editorjs/editorjs";
 import tools from "@/config/tools";
 
-import add from "@/firebase/firestore/add";
 import constants from "@/config/constants";
 import useDebounce from "@/hooks/useDebounce";
+import addDocument from "@/firebase/firestore/addDocument";
 
 const EditorComponent = ({ note }) => {
   const editorInstance = useRef(null);
   const latestNoteId = useRef(note.id);
 
   const saveData = async (data) => {
-    await add(constants.collections.notes, data, latestNoteId.current);
+    await addDocument(constants.collections.notes, data, latestNoteId.current);
   };
 
   const handleEditorChange = async () => {
@@ -61,7 +61,7 @@ const EditorComponent = ({ note }) => {
     latestNoteId.current = note.id;
   }, [note.id]);
 
-  return <div className="flex-grow p-5 h-full" id="editorjs" />;
+  return <div className="flex-grow-0 p-5 w-full h-full" id="editorjs" />;
 };
 
 export default EditorComponent;

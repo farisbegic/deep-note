@@ -1,38 +1,41 @@
 "use client";
 
 import React from "react";
-import add from "@/firebase/firestore/add";
-import deleteDocument from "@/firebase/firestore/delete";
+import deleteDocument from "@/firebase/firestore/deleteDocument";
 import constants from "@/config/constants";
 import useDebounce from "@/hooks/useDebounce";
 import SidebarItem from "./SidebarItem";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
 import routes from "@/config/routes";
+import addDocument from "@/firebase/firestore/addDocument";
 
 function Sidebar({ notes, selected, setNote, children, user }) {
   const addItem = async () => {
-    await add(constants.collections.notes, {
-      blocks: [
-        {
-          type: "paragraph",
-          data: {
-            text: "Write your content here!",
+    try {
+      await addDocument(constants.collections.notes, {
+        blocks: [
+          {
+            type: "paragraph",
+            data: {
+              text: "Write your content here!",
+            },
           },
+        ],
+        time: new Date().toISOString(),
+        version: "2.28.0",
+        name: `Document ${notes.length + 1}`,
+        user: {
+          email: user.email,
         },
-      ],
-      time: new Date().toISOString(),
-      version: "2.28.0",
-      name: `Document ${notes.length + 1}`,
-      user: {
-        email: user.email,
-      },
-    });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const editItem = async (name, data) => {
     const { id, ...rest } = data;
-    await add(
+    await addDocument(
       constants.collections.notes,
       {
         ...rest,
@@ -259,7 +262,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
       <div className="flex h-screen">
         <div
           id="application-sidebar"
-          className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[60] w-64 bg-white border-r border-gray-200 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
+          className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[60] w-72 bg-white border-r border-gray-200 pt-7 pb-10 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
         >
           <div className="px-6 pb-6 lg:hidden">
             <a
@@ -272,7 +275,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
           </div>
 
           <nav
-            className="hs-accordion-group px-6 w-full flex flex-col flex-wrap"
+            className="hs-accordion-group px-6 w-full flex flex-grow flex-col"
             data-hs-accordion-always-open
           >
             <ul className="w-full space-y-1.5">
@@ -289,7 +292,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
               <li>
                 <button
                   className="flex items-center w-full gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 "
-                  onClick={() => addItem()}
+                  onClick={addItem}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

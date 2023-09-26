@@ -3,7 +3,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import firestore from "../config";
 
-const getAll = async (name) => {
+const getAllDocuments = async (name) => {
   const collectionRef = collection(firestore, name);
   const querySnapshot = await getDocs(collectionRef);
 
@@ -22,4 +22,4 @@ const getAll = async (name) => {
   return result;
 };
 
-export default getAll;
+export default getAllDocuments;

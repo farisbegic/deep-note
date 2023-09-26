@@ -5,7 +5,7 @@ import firestore from "../config";
 import { revalidatePath } from "next/cache";
 import routes from "@/config/routes";
 
-const add = async (name, data, id = null) => {
+const addDocument = async (name, data, id = null) => {
   const docRef = id ? doc(firestore, name, id) : collection(firestore, name);
 
   let result = null;
@@ -24,4 +24,4 @@ const add = async (name, data, id = null) => {
   return { result, error };
 };
 
-export default add;
+export default addDocument;

@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import firestore from "../config";
 
-const get = async (
+const getDocument = async (
   collectionName,
   id,
   whereConditions = [],
@@ -58,4 +58,4 @@ const get = async (
   return { result, error };
 };
 
-export default get;
+export default getDocument;

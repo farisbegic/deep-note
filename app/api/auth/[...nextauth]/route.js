@@ -2,8 +2,8 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import constants from "@/config/constants";
 import routes from "@/config/routes";
-import add from "@/firebase/firestore/add";
-import get from "@/firebase/firestore/get";
+import addDocument from "@/firebase/firestore/addDocument";
+import getDocument from "@/firebase/firestore/getDocument";
 
 // get firestore
 
@@ -17,19 +17,19 @@ export const authOptions = {
   callbacks: {
     async signIn(user) {
       try {
-        const userResponse = await get(constants.collections.users, null, [
+        const userResponse = await getDocument(constants.collections.users, null, [
           ["email", "==", user.user.email],
         ]);
 
         if (userResponse.result.length === 0) {
-          const response = await add(constants.collections.users, {
+          const response = await addDocument(constants.collections.users, {
             name: user.user.name.split(" ")[0],
             surname: user.user.name.split(" ")[1],
             email: user.user.email,
             picture: user.user.image,
           });
 
-          await add(constants.collections.notes, {
+          await addDocument(constants.collections.notes, {
             blocks: [
               {
                 type: "paragraph",

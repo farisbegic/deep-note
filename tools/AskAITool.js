@@ -20,17 +20,11 @@ class AskAITool {
   createButton() {
     const button = document.createElement("button");
     button.type = "button";
-    button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-</svg>
-`;
-    button.classList.add(
-      "flex",
-      "items-center",
-      "padding-[6px]",
-      "relative",
-      "text-violet-600"
-    );
+    button.innerHTML = `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 20">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 16.5A2.493 2.493 0 0 1 6.51 18H6.5a2.468 2.468 0 0 1-2.4-3.154 2.98 2.98 0 0 1-.85-5.274 2.468 2.468 0 0 1 .921-3.182 2.477 2.477 0 0 1 1.875-3.344 2.5 2.5 0 0 1 3.41-1.856A2.5 2.5 0 0 1 11 3.5m0 13v-13m0 13a2.492 2.492 0 0 0 4.49 1.5h.01a2.467 2.467 0 0 0 2.403-3.154 2.98 2.98 0 0 0 .847-5.274 2.468 2.468 0 0 0-.921-3.182 2.479 2.479 0 0 0-1.875-3.344A2.5 2.5 0 0 0 13.5 1 2.5 2.5 0 0 0 11 3.5m-8 5a2.5 2.5 0 0 1 3.48-2.3m-.28 8.551a3 3 0 0 1-2.953-5.185M19 8.5a2.5 2.5 0 0 0-3.481-2.3m.28 8.551a3 3 0 0 0 2.954-5.185"/>
+  </svg>`;
+
+    button.style.cssText = "width: 13px; margin: 5px";
     return button;
   }
 
@@ -56,7 +50,7 @@ class AskAITool {
     ul.innerHTML = actions
       .map(
         (action, index) => `
-    <li className="px-4 py-2 cursor-pointer hover:bg-gray-200 flex items-center" key="${index}" data-action=${action.slug}>
+    <li class="px-4 py-2 cursor-pointer hover:bg-gray-200 flex justify-start items-center" key="${index}" data-action=${action.slug}>
       <div style="display: inline-flex; text-align: left; width: 26px; height: 26px; box-shadow: 0 0 0 1px #c9c9cc7a; border-radius: 5px; align-items: center; justify-content: center; background: #fff; box-sizing: content-box; flex-shrink: 0; margin-right: 10px;">
         ${action.icon}
       </div>

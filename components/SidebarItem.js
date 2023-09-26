@@ -41,7 +41,7 @@ function SidebarItem({
         ) : (
           <input
             type="text"
-            className="w-full text-sm text-slate-700 rounded-md"
+            className="w-full px-2 text-sm text-slate-700 rounded-md"
             defaultValue={note.name}
             onChange={debouncedEditItem}
           />

@@ -42,7 +42,7 @@ const tools = {
     inlineToolbar: true,
     shortcut: "CMD+ALT+T",
   },
-  improve: AskAITool,
+  askAI: AskAITool,
 };
 
 export default tools;

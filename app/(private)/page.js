@@ -3,7 +3,7 @@ import constants from "@/config/constants";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import routes from "@/config/routes";
-import get from "@/firebase/firestore/get";
+import getDocument from "@/firebase/firestore/getDocument";
 
 export const metadata = {
   title: constants.name,
@@ -17,7 +17,7 @@ export default async function Home() {
     redirect(routes.auth.path);
   }
 
-  const data = await get(constants.collections.notes, null, [
+  const data = await getDocument(constants.collections.notes, null, [
     ["user.email", "==", session.user.email],
   ]);
 
