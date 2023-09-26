@@ -3,13 +3,13 @@ const routes = {
     path: "/",
     title: "Home",
     slug: "home",
-    description: "Home page",
+    description: "Note taking app enhanced with the power of AI",
   },
   auth: {
     path: "/auth",
-    title: "Auth",
+    title: "Authentication",
     slug: "auth",
-    description: "Auth page",
+    description: "User authentication page",
   },
 };
 

@@ -1,5 +1,4 @@
-import Application from "@/components/Application";
-import getAll from "@/firebase/firestore/getAll";
+import Notebook from "@/components/Notebook";
 import constants from "@/config/constants";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -17,9 +16,10 @@ export default async function Home() {
   if (session === null) {
     redirect(routes.auth.path);
   }
+
   const data = await get(constants.collections.notes, null, [
     ["user.email", "==", session.user.email],
   ]);
 
-  return <Application notes={data.result} />;
+  return <Notebook notes={data.result} user={session.user} />;
 }

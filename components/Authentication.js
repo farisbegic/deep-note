@@ -18,11 +18,11 @@ function Authentication() {
         <div className="absolute inset-0 bg-black opacity-60" />
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl shadow-sm ">
+      <div className="bg-white border border-gray-200 w-[400px] rounded-xl shadow-sm ">
         <div className="p-4 sm:p-7">
           <div className="text-center">
             <h1 className="block text-2xl font-bold text-gray-800">
-              👋 Welcome to the DeepNote!
+              👋 Welcome!
             </h1>
             <p className="mt-2 text-sm text-gray-600 ">
               Sign in to continue to your account.

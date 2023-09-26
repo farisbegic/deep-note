@@ -3,6 +3,7 @@
 import { doc, setDoc, collection, addDoc } from "firebase/firestore";
 import firestore from "../config";
 import { revalidatePath } from "next/cache";
+import routes from "@/config/routes";
 
 const add = async (name, data, id = null) => {
   const docRef = id ? doc(firestore, name, id) : collection(firestore, name);
@@ -14,7 +15,8 @@ const add = async (name, data, id = null) => {
     result = id
       ? await setDoc(docRef, data, { merge: true })
       : await addDoc(docRef, data);
-    revalidatePath("/");
+
+    revalidatePath(routes.home.path);
   } catch (e) {
     error = e.message;
   }
