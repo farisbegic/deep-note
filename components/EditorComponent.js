@@ -61,7 +61,7 @@ const EditorComponent = ({ note }) => {
     latestNoteId.current = note.id;
   }, [note.id]);
 
-  return <div className="lg:px-10 p-5 h-full" id="editorjs" />;
+  return <div className="flex-grow p-5 h-full" id="editorjs" />;
 };
 
 export default EditorComponent;

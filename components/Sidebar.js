@@ -64,13 +64,13 @@ function Sidebar({ notes, selected, setNote, children, user }) {
   const debouncedSearchItem = useDebounce(handleSearch, 1000);
 
   return (
-    <div className="bg-gray-50">
-      <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:pl-64">
+    <>
+      <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 ">
         <nav
           className="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8"
           aria-label="Global"
         >
-          <div className="mr-5 lg:mr-0 lg:hidden">
+          <div className="mr-5 lg:mr-0 ">
             <a
               className="flex-none text-xl font-semibold"
               href={routes.home.path}
@@ -80,7 +80,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
             </a>
           </div>
 
-          <div className="w-full flex items-center justify-end ml-auto sm:justify-between sm:gap-x-3 sm:order-3">
+          <div className="w-full flex items-center justify-end ml-auto gap-x-3 sm:order-3">
             <div className="sm:hidden">
               <button
                 type="button"
@@ -256,62 +256,64 @@ function Sidebar({ notes, selected, setNote, children, user }) {
         </div>
       </div>
 
-      <div
-        id="application-sidebar"
-        className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 left-0 bottom-0 z-[60] w-64 bg-white border-r border-gray-200 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
-      >
-        <div className="px-6">
-          <a
-            className="flex-none text-xl font-semibold"
-            href={routes.home.path}
-            aria-label="Deep Note"
-          >
-            DeepNote
-          </a>
-        </div>
-
-        <nav
-          className="hs-accordion-group p-6 w-full flex flex-col flex-wrap"
-          data-hs-accordion-always-open
+      <div className="flex h-screen">
+        <div
+          id="application-sidebar"
+          className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[60] w-64 bg-white border-r border-gray-200 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
         >
-          <ul className="w-full space-y-1.5">
-            {notes.map((note, index) => (
-              <SidebarItem
-                key={index}
-                note={note}
-                selected={selected}
-                deleteItem={deleteItem}
-                debouncedEditItem={debouncedEditItem}
-                setNote={setNote}
-              />
-            ))}
-            <li>
-              <button
-                className="flex items-center w-full gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 "
-                onClick={() => addItem()}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4"
+          <div className="px-6 pb-6 lg:hidden">
+            <a
+              className="flex-none text-xl font-semibold"
+              href={routes.home.path}
+              aria-label="Deep Note"
+            >
+              DeepNote
+            </a>
+          </div>
+
+          <nav
+            className="hs-accordion-group px-6 w-full flex flex-col flex-wrap"
+            data-hs-accordion-always-open
+          >
+            <ul className="w-full space-y-1.5">
+              {notes.map((note, index) => (
+                <SidebarItem
+                  key={index}
+                  note={note}
+                  selected={selected}
+                  deleteItem={deleteItem}
+                  debouncedEditItem={debouncedEditItem}
+                  setNote={setNote}
+                />
+              ))}
+              <li>
+                <button
+                  className="flex items-center w-full gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 "
+                  onClick={() => addItem()}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
-                Add Note
-              </button>
-            </li>
-          </ul>
-        </nav>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                  Add Note
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    </>
   );
 }
 

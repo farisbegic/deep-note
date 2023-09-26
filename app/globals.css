@@ -6,3 +6,12 @@
     width: auto;
     height: auto;
 }
+
+.ce-block__content {
+    max-width: 100%;
+}
+
+.ce-toolbar__actions {
+    right: 0;
+}
+
