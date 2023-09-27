@@ -52,6 +52,7 @@ const getDocument = async (
       result = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     }
   } catch (e) {
+    console.error(e);
     error = e;
   }
 

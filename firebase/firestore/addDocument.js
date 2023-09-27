@@ -22,7 +22,8 @@ const addDocument = async (name, data, id = null) => {
 
     revalidatePath(routes.home.path);
   } catch (e) {
-    error = e.message;
+    console.log(e);
+    error = e;
   }
 
   return { result, error };

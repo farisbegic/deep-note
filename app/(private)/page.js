@@ -17,9 +17,12 @@ export default async function Home() {
     redirect(routes.auth.path);
   }
 
-  const data = await getDocument(constants.collections.notes, null, [
-    ["user.email", "==", session.user.email],
-  ]);
+  const data = await getDocument(
+    constants.collections.notes,
+    null,
+    [["user.email", "==", session.user.email]],
+    [["createdAt", "asc"]]
+  );
 
   return <Notebook notes={data.result} user={session.user} />;
 }

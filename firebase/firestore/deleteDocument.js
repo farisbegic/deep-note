@@ -15,6 +15,7 @@ const deleteDocument = async (collection, id) => {
     result = true;
     revalidatePath("/");
   } catch (e) {
+    console.log(e);
     error = e;
   }
 
