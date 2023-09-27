@@ -10,7 +10,7 @@ import addDocument from "@/firebase/firestore/addDocument";
 
 const EditorComponent = ({ note }) => {
   const editorInstance = useRef(null);
-  const latestNoteId = useRef(note.id);
+  const latestNoteId = useRef(note?.id);
 
   const saveData = async (data) => {
     if (data.blocks.length === 0) {
@@ -61,8 +61,8 @@ const EditorComponent = ({ note }) => {
   }, [note]);
 
   useEffect(() => {
-    latestNoteId.current = note.id;
-  }, [note.id]);
+    latestNoteId.current = note?.id;
+  }, [note?.id]);
 
   return <div className="flex-grow-0 p-5 w-full h-full" id="editorjs" />;
 };

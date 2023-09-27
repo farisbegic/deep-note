@@ -11,6 +11,10 @@ const addDocument = async (name, data, id = null) => {
   let result = null;
   let error = null;
 
+  if (id === null) {
+    data.createdAt = new Date().toISOString();
+  }
+
   try {
     result = id
       ? await setDoc(docRef, data, { merge: true })

@@ -23,7 +23,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
         ],
         time: new Date().toISOString(),
         version: "2.28.0",
-        name: `Document ${notes.length + 1}`,
+        name: `Document ${notes?.length + 1}`,
         user: {
           email: user.email,
         },
@@ -54,7 +54,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
   };
 
   const handleSearch = (e) => {
-    notes.filter((note) => {
+    notes?.filter((note) => {
       if (note.name.toLowerCase().includes(e.target.value.toLowerCase())) {
         setNote({
           ...note,
@@ -253,7 +253,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
               className="text-sm font-semibold text-gray-800 truncate"
               aria-current="page"
             >
-              {selected.name}
+              {selected?.name}
             </li>
           </ol>
         </div>
@@ -279,7 +279,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
             data-hs-accordion-always-open
           >
             <ul className="w-full space-y-1.5">
-              {notes.map((note, index) => (
+              {notes?.map((note, index) => (
                 <SidebarItem
                   key={index}
                   note={note}
