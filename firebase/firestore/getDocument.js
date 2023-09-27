@@ -18,7 +18,6 @@ const getDocument = async (
   orderByConditions = []
 ) => {
   let result = null;
-  let error = null;
 
   try {
     if (id) {
@@ -29,7 +28,7 @@ const getDocument = async (
       if (docSnap.exists()) {
         result = docSnap.data();
       } else {
-        error = "No such document!";
+        console.log("No such document!");
       }
     } else {
       // Fetch multiple documents based on where and orderBy conditions
@@ -53,10 +52,9 @@ const getDocument = async (
     }
   } catch (e) {
     console.error(e);
-    error = e;
   }
 
-  return { result, error };
+  return result;
 };
 
 export default getDocument;

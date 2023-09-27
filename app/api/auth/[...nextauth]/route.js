@@ -17,11 +17,13 @@ export const authOptions = {
   callbacks: {
     async signIn(user) {
       try {
-        const userResponse = await getDocument(constants.collections.users, null, [
-          ["email", "==", user.user.email],
-        ]);
+        const userResponse = await getDocument(
+          constants.collections.users,
+          null,
+          [["email", "==", user.user.email]]
+        );
 
-        if (userResponse.result.length === 0) {
+        if (userResponse.length === 0) {
           const response = await addDocument(constants.collections.users, {
             name: user.user.name.split(" ")[0],
             surname: user.user.name.split(" ")[1],

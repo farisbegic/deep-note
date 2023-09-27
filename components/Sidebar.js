@@ -9,8 +9,24 @@ import { signOut } from "next-auth/react";
 import routes from "@/config/routes";
 import addDocument from "@/firebase/firestore/addDocument";
 
-function Sidebar({ notes, selected, setNote, children, user }) {
+function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
   const addItem = async () => {
+    setNotes({
+      blocks: [
+        {
+          type: "paragraph",
+          data: {
+            text: "Write your content here!",
+          },
+        },
+      ],
+      time: new Date().toISOString(),
+      version: "2.28.0",
+      name: `Document ${notes?.length + 1}`,
+      user: {
+        email: user.email,
+      },
+    });
     try {
       await addDocument(constants.collections.notes, {
         blocks: [
@@ -46,6 +62,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
   };
 
   const deleteItem = async (id) => {
+    setNotes(id);
     await deleteDocument(constants.collections.notes, id);
   };
 

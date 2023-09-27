@@ -24,5 +24,5 @@ export default async function Home() {
     [["createdAt", "asc"]]
   );
 
-  return <Notebook notes={data.result} user={session.user} />;
+  return <Notebook notes={data} user={session.user} />;
 }
