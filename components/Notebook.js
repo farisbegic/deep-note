@@ -12,7 +12,7 @@ function Notebook({ notes, user }) {
   const [note, setNote] = useState(null);
 
   useEffect(() => {
-    if (notes?.length > 0) {
+    if (notes?.length > 0 && note === null) {
       setNote(notes[0]);
     }
   }, [notes]);
