@@ -22,6 +22,11 @@ const constants = {
     clientId: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID,
     clientSecret: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_SECRET,
   },
+  operations: {
+    add: "add",
+    delete: "delete",
+    edit: "edit",
+  },
 };
 
 export default constants;

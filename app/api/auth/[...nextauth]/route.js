@@ -44,7 +44,6 @@ export const authOptions = {
             version: "2.28.0",
             name: `First Note`,
             user: {
-              id: response.result.id,
               email: user.user.email,
             },
           });
@@ -54,6 +53,9 @@ export const authOptions = {
       }
 
       return true;
+    },
+    async redirect(url, baseUrl) {
+      return baseUrl;
     },
   },
   pages: {

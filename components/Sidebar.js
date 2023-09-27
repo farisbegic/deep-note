@@ -11,23 +11,29 @@ import addDocument from "@/firebase/firestore/addDocument";
 
 function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
   const addItem = async () => {
-    setNotes({
-      blocks: [
-        {
-          type: "paragraph",
-          data: {
-            text: "Write your content here!",
+    try {
+      // Set notes for optimistic UI
+      setNotes({
+        type: constants.operations.add,
+        data: {
+          blocks: [
+            {
+              type: "paragraph",
+              data: {
+                text: "Write your content here!",
+              },
+            },
+          ],
+          time: new Date().toISOString(),
+          version: "2.28.0",
+          name: `Document ${notes?.length + 1}`,
+          user: {
+            email: user.email,
           },
         },
-      ],
-      time: new Date().toISOString(),
-      version: "2.28.0",
-      name: `Document ${notes?.length + 1}`,
-      user: {
-        email: user.email,
-      },
-    });
-    try {
+      });
+
+      // Add document to firestore
       await addDocument(constants.collections.notes, {
         blocks: [
           {
@@ -51,6 +57,17 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
 
   const editItem = async (name, data) => {
     const { id, ...rest } = data;
+
+    // Set notes for optimistic UI
+    setNotes({
+      type: constants.operations.edit,
+      data: {
+        id: id,
+        name: name,
+      },
+    });
+
+    // Update document in firestore
     await addDocument(
       constants.collections.notes,
       {
@@ -62,7 +79,13 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
   };
 
   const deleteItem = async (id) => {
-    setNotes(id);
+    // Set notes for optimistic UI
+    setNotes({
+      type: constants.operations.delete,
+      data: id,
+    });
+
+    // Delete document from firestore
     await deleteDocument(constants.collections.notes, id);
   };
 
@@ -72,7 +95,7 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
 
   const handleSearch = (e) => {
     notes?.filter((note) => {
-      if (note.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+      if (note?.name.toLowerCase().includes(e.target.value.toLowerCase())) {
         setNote({
           ...note,
         });
@@ -85,7 +108,7 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
 
   return (
     <>
-      <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[60] w-full bg-white border-b text-sm py-2.5 sm:py-4 ">
+      <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[70] w-full bg-white border-b text-sm py-2.5 sm:py-4 ">
         <nav
           className="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8"
           aria-label="Global"
@@ -276,10 +299,10 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
         </div>
       </div>
 
-      <div className="flex h-full">
+      <div className="flex h-[90vh]">
         <div
           id="application-sidebar"
-          className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[50] w-72 bg-white border-r border-gray-200 pt-7 pb-10 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
+          className="hs-overlay overflow-x-auto hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[60] w-72 bg-white border-r border-gray-200 pt-7 pb-10 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
         >
           <div className="px-6 pb-6 lg:hidden">
             <a
@@ -296,19 +319,9 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
             data-hs-accordion-always-open
           >
             <ul className="w-full space-y-1.5">
-              {notes?.map((note, index) => (
-                <SidebarItem
-                  key={index}
-                  note={note}
-                  selected={selected}
-                  deleteItem={deleteItem}
-                  debouncedEditItem={debouncedEditItem}
-                  setNote={setNote}
-                />
-              ))}
               <li>
                 <button
-                  className="flex items-center w-full gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 "
+                  className="flex items-center w-full gap-x-3.5 py-2 px-2.5 bg-blue-300 text-sm text-slate-700 rounded-md"
                   onClick={addItem}
                 >
                   <svg
@@ -328,6 +341,16 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
                   Add Note
                 </button>
               </li>
+              {notes?.map((note, index) => (
+                <SidebarItem
+                  key={index}
+                  note={note}
+                  selected={selected}
+                  deleteItem={deleteItem}
+                  debouncedEditItem={debouncedEditItem}
+                  setNote={setNote}
+                />
+              ))}
             </ul>
           </nav>
         </div>
