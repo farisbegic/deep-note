@@ -68,7 +68,7 @@ function Sidebar({ notes, selected, setNote, children, user }) {
 
   return (
     <>
-      <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 ">
+      <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[60] w-full bg-white border-b text-sm py-2.5 sm:py-4 ">
         <nav
           className="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8"
           aria-label="Global"
@@ -259,10 +259,10 @@ function Sidebar({ notes, selected, setNote, children, user }) {
         </div>
       </div>
 
-      <div className="flex h-screen">
+      <div className="flex h-full">
         <div
           id="application-sidebar"
-          className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[60] w-72 bg-white border-r border-gray-200 pt-7 pb-10 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
+          className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[50] w-72 bg-white border-r border-gray-200 pt-7 pb-10 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
         >
           <div className="px-6 pb-6 lg:hidden">
             <a
