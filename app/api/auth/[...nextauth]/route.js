@@ -5,8 +5,6 @@ import routes from "@/config/routes";
 import addDocument from "@/firebase/firestore/addDocument";
 import getDocument from "@/firebase/firestore/getDocument";
 
-// get firestore
-
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -24,7 +22,7 @@ export const authOptions = {
         );
 
         if (userResponse.length === 0) {
-          const response = await addDocument(constants.collections.users, {
+          await addDocument(constants.collections.users, {
             name: user.user.name.split(" ")[0],
             surname: user.user.name.split(" ")[1],
             email: user.user.email,
@@ -53,9 +51,6 @@ export const authOptions = {
       }
 
       return true;
-    },
-    async redirect(url, baseUrl) {
-      return baseUrl;
     },
   },
   pages: {

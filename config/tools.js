@@ -12,7 +12,7 @@ const tools = {
     class: Header,
     inlineToolbar: true,
     config: {
-      placeholder: "Header",
+      placeholder: "Enter a header",
     },
     shortcut: "CMD+SHIFT+H",
   },

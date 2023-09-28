@@ -8,6 +8,7 @@ import SidebarItem from "./SidebarItem";
 import { signOut } from "next-auth/react";
 import routes from "@/config/routes";
 import addDocument from "@/firebase/firestore/addDocument";
+import Image from "next/image";
 
 function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
   const addItem = async () => {
@@ -177,10 +178,12 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
                   type="button"
                   className="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] rounded-full font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs"
                 >
-                  <img
-                    className="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white"
+                  <Image
                     src={user.image}
                     alt="User Image"
+                    width={64}
+                    height={64}
+                    className="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white"
                     referrerPolicy="no-referrer"
                   />
                 </button>
