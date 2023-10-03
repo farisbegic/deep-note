@@ -3,6 +3,8 @@ import constants from "@/config/constants";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import routes from "@/config/routes";
+
+import apiRequest from "@/utils/apiRequest";
 import getDocument from "@/firebase/firestore/getDocument";
 
 export const metadata = {
@@ -24,5 +26,5 @@ export default async function Home() {
     [["createdAt", "asc"]]
   );
 
-  return <Notebook notes={data} user={session.user} />;
+  return data && <Notebook notes={data} user={session.user} />;
 }
