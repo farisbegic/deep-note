@@ -1,70 +1,30 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import EditorJS from "@editorjs/editorjs";
-import tools from "@/config/tools";
+import React from "react";
+import { Editor } from "novel";
 
 import constants from "@/config/constants";
-import useDebounce from "@/hooks/useDebounce";
 import addDocument from "@/firebase/firestore/addDocument";
 
 const EditorComponent = ({ note }) => {
-  const editorInstance = useRef(null);
-  const latestNoteId = useRef(note?.id);
-
   const saveData = async (data) => {
-    if (data.blocks.length === 0) {
-      return;
-    }
-    await addDocument(constants.collections.notes, data, latestNoteId.current);
+    await addDocument(constants.collections.notes, data, note.id);
   };
 
-  const handleEditorChange = async () => {
-    const data = await editorInstance.current.save();
-    debouncedSaveData(data);
+  const handleEditorChange = async (value) => {
+    await saveData(value.getJSON());
   };
 
-  const debouncedSaveData = useDebounce(saveData, 2000);
-
-  const initializeEditor = () => {
-    const editor = new EditorJS({
-      holder: "editorjs",
-      placeholder: "Write your post content here...",
-      onChange: handleEditorChange,
-      onReady: () => {
-        editorInstance.current = editor;
-      },
-      data: note,
-      tools: tools,
-    });
-  };
-
-  useEffect(() => {
-    if (editorInstance.current === null) {
-      initializeEditor();
-    }
-
-    return () => {
-      editorInstance?.current?.destroy();
-      editorInstance.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (editorInstance.current === null) {
-      return;
-    }
-
-    if (editorInstance.current.isReady) {
-      editorInstance.current.render(note);
-    }
-  }, [note]);
-
-  useEffect(() => {
-    latestNoteId.current = note?.id;
-  }, [note?.id]);
-
-  return <div className="flex-grow-0 p-5 w-full h-full" id="editorjs" />;
+  return (
+    <Editor
+      key={note.id}
+      disableLocalStorage={true}
+      debounceDuration={1000}
+      onDebouncedUpdate={handleEditorChange}
+      className="h-full w-[-webkit-fill-available] lg:absolute lg:top-[70px] lg:left-[287px]"
+      defaultValue={note}
+    />
+  );
 };
 
 export default EditorComponent;

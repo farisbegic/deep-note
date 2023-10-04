@@ -1,51 +1,22 @@
 "use client";
 
 import React from "react";
-import deleteDocument from "@/firebase/firestore/deleteDocument";
 import constants from "@/config/constants";
 import useDebounce from "@/hooks/useDebounce";
 import SidebarItem from "./SidebarItem";
 import { signOut } from "next-auth/react";
 import routes from "@/config/routes";
-import addDocument from "@/firebase/firestore/addDocument";
-import Image from "next/image";
 
-function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
+import Image from "next/image";
+import addDocument from "@/firebase/firestore/addDocument";
+import deleteDocument from "@/firebase/firestore/deleteDocument";
+
+function Sidebar({ notes, selected, setNote, children, user }) {
   const addItem = async () => {
     try {
-      // Set notes for optimistic UI
-      setNotes({
-        type: constants.operations.add,
-        data: {
-          blocks: [
-            {
-              type: "paragraph",
-              data: {
-                text: "Write your content here!",
-              },
-            },
-          ],
-          time: new Date().toISOString(),
-          version: "2.28.0",
-          name: `Document ${notes?.length + 1}`,
-          user: {
-            email: user.email,
-          },
-        },
-      });
-
-      // Add document to firestore
       await addDocument(constants.collections.notes, {
-        blocks: [
-          {
-            type: "paragraph",
-            data: {
-              text: "Write your content here!",
-            },
-          },
-        ],
-        time: new Date().toISOString(),
-        version: "2.28.0",
+        type: "doc",
+        content: [],
         name: `Document ${notes?.length + 1}`,
         user: {
           email: user.email,
@@ -59,39 +30,38 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
   const editItem = async (name, data) => {
     const { id, ...rest } = data;
 
-    // Set notes for optimistic UI
-    setNotes({
-      type: constants.operations.edit,
-      data: {
-        id: id,
-        name: name,
-      },
-    });
-
-    // Update document in firestore
-    await addDocument(
-      constants.collections.notes,
-      {
-        ...rest,
-        name: name,
-      },
-      id
-    );
+    try {
+      await addDocument(
+        constants.collections.notes,
+        {
+          ...rest,
+          name: name,
+        },
+        id
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteItem = async (id) => {
-    // Set notes for optimistic UI
-    setNotes({
-      type: constants.operations.delete,
-      data: id,
-    });
+    try {
+      await deleteDocument(constants.collections.notes, id);
 
-    // Delete document from firestore
-    await deleteDocument(constants.collections.notes, id);
+      if (selected?.id === id) {
+        if (notes.length > 1) {
+          setNote(notes[0]); // Set to the first note
+        } else {
+          setNote(null); // Set to null if no notes are left
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleEdit = (e) => {
-    editItem(e.target.value, selected);
+  const handleEdit = async (e, note) => {
+    await editItem(e, note);
   };
 
   const handleSearch = (e) => {
@@ -305,7 +275,7 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
       <div className="flex h-[90vh]">
         <div
           id="application-sidebar"
-          className="hs-overlay overflow-x-auto hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform lg:static md:static fixed hidden top-0 left-0 bottom-0 z-[60] w-72 bg-white border-r border-gray-200 pt-7 pb-10 lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
+          className="hs-overlay overflow-x-auto hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform fixed lg:static top-0 left-0 bottom-0 z-[60] w-72 flex-none bg-white border-r border-gray-200 pt-7 pb-10 sm:hidden md:block lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
         >
           <div className="px-6 pb-6 lg:hidden">
             <a
@@ -318,7 +288,7 @@ function Sidebar({ notes, setNotes, selected, setNote, children, user }) {
           </div>
 
           <nav
-            className="hs-accordion-group px-6 w-full flex flex-grow flex-col"
+            className="hs-accordion-group px-6 w-full flex flex-grow flex-col relative top-16"
             data-hs-accordion-always-open
           >
             <ul className="w-full space-y-1.5">

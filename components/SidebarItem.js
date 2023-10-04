@@ -1,3 +1,4 @@
+import trimText from "@/utils/trimText";
 import React, { useState } from "react";
 
 function SidebarItem({
@@ -12,16 +13,19 @@ function SidebarItem({
   const toggleEdit = () => {
     setEdit(!edit);
   };
+
   return (
     <li
       className={`flex w-full items-center justify-between gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md ${
         selected?.id === note?.id ? "bg-blue-200" : "bg-gray-100"
       }`}
-      onClick={() => setNote(note)}
     >
-      <button className="flex items-center gap-x-3.5">
+      <div>
         {!edit ? (
-          <>
+          <button
+            className="flex items-center gap-x-3.5"
+            onClick={() => setNote(note)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -36,17 +40,17 @@ function SidebarItem({
                 d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
               />
             </svg>
-            {note?.name}
-          </>
+            {trimText(note?.name, 13)}
+          </button>
         ) : (
           <input
             type="text"
             className="w-full px-2 text-sm text-slate-700 rounded-md"
             defaultValue={note?.name}
-            onChange={debouncedEditItem}
+            onChange={(e) => debouncedEditItem(e.target.value, note)}
           />
         )}
-      </button>
+      </div>
       <div className="flex items-center gap-1">
         <button onClick={() => toggleEdit()}>
           <svg

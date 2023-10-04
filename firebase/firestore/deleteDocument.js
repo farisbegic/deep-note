@@ -3,6 +3,7 @@
 import { doc, deleteDoc } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 import firestore from "../config";
+import routes from "@/config/routes";
 
 const deleteDocument = async (collection, id) => {
   const docRef = doc(firestore, collection, id);
@@ -13,7 +14,7 @@ const deleteDocument = async (collection, id) => {
   try {
     await deleteDoc(docRef);
     result = true;
-    revalidatePath("/");
+    revalidatePath(routes.home.path);
   } catch (e) {
     console.log(e);
     error = e;
